@@ -19,7 +19,7 @@ const liffMock = {
   },
 
   isInClient(): boolean {
-    return false;
+    return true;
   },
 
   getLanguage(): string {

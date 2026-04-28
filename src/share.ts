@@ -27,11 +27,19 @@ const ACCENT = '#06C755';
  * In dev, falls back to the dev URL so testing the mock end-to-end works.
  */
 function buildDeepLink(result: SplitResult): string {
-  const base = typeof window !== 'undefined' ? window.location.origin : '';
+  const liffId = import.meta.env.VITE_LIFF_ID;
   const params = new URLSearchParams({
     total: String(result.total),
     people: String(result.people),
   });
+
+  // Inside LINE: liff.line.me/{liffId}?... keeps the user in LIFF context.
+  // Outside LINE / dev: fall back to the web origin so the link still works.
+  if (liffId) {
+    return `https://liff.line.me/${liffId}?${params.toString()}`;
+  }
+
+  const base = typeof window !== 'undefined' ? window.location.origin : '';
   return `${base}/?${params.toString()}`;
 }
 
@@ -165,6 +173,13 @@ export function buildShareMessage(result: SplitResult, lang: Lang) {
  * false on user cancel or any error. Caller decides what UX to show.
  */
 export async function shareResult(liff: LiffLike, result: SplitResult): Promise<boolean> {
+  if (!liff.isInClient()) {
+    alert(getLang() === 'ja'
+      ? 'この機能はLINEアプリ内でのみ利用できます'
+      : 'Sharing only works inside the LINE app.');
+    return false;
+  }
+
   const lang = getLang();
   const message = buildShareMessage(result, lang);
 
@@ -172,7 +187,6 @@ export async function shareResult(liff: LiffLike, result: SplitResult): Promise<
     await liff.shareTargetPicker([message]);
     return true;
   } catch (err) {
-    // Most common cause: user closed the picker. Not actually an error.
     console.warn('[share] picker closed or failed:', err);
     return false;
   }
