@@ -12,7 +12,9 @@ A LIFF mini-app for splitting a bill across people in a LINE chat. Tap a button,
   <a href="https://liff.line.me/2009905533-DGtLYpEl"><b>Open in LINE</b></a>  ·  <a href="https://warikan-jp.netlify.app"><b>Web preview</b></a>
 </p>
 
-![Demo](docs/demo.gif)
+<p align="center">
+  <img src="docs/demo.gif" alt="Demo" />
+</p>
 
 ---
 
