@@ -1,4 +1,19 @@
 import './style.css';
+
+import './style.css';
+
+// Route between mock (dev) and real SDK (prod). Same call sites either way.
+const liff = import.meta.env.DEV
+  ? (await import('./liff-mock')).default
+  : (await import('@line/liff')).default;
+
+// Initialize LIFF. In dev the mock no-ops; in prod this actually contacts LINE.
+const LIFF_ID = import.meta.env.VITE_LIFF_ID;
+if (!import.meta.env.DEV && !LIFF_ID) {
+  throw new Error('VITE_LIFF_ID is required in production builds');
+}
+await liff.init({ liffId: LIFF_ID ?? 'dev-no-id' });
+
 import { detectLang, getLang, setLang, t, onLangChange, type StringKey } from './i18n';
 import { splitBill, type SplitResult } from './calc';
 
@@ -120,12 +135,19 @@ function formatYen(n: number): string {
   return `¥${n.toLocaleString('en-US')}`;
 }
 
-// ---------- Share button (placeholder) ----------
-// Real LIFF integration lands in the next step. Wire the click now so we have a
-// hookable button; v1's share.ts will replace the body of this handler.
+// ---------- Share button ----------
 
-shareBtn.addEventListener('click', () => {
-  if (!state.result) return;
-  console.log('share clicked, would send:', state.result);
-  alert(`v1 share placeholder: ¥${state.result.perPerson} × ${state.result.people}人`);
+import { shareResult } from './share';
+
+shareBtn.addEventListener('click', async () => {
+  if (!state.result || shareBtn.disabled) return;
+
+  // Prevent double-tap during the picker animation
+  shareBtn.disabled = true;
+  try {
+    await shareResult(liff, state.result);
+  } finally {
+    // Re-enable based on whether the result is still valid
+    render();
+  }
 });
