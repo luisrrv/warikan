@@ -61,6 +61,7 @@ These were tempting and got cut to keep v1 focused:
 - **History / saved splits.** Would need a backend or `IndexedDB`. Not a v1 problem.
 - **Tip percentage.** No tipping in Japan. Adding it would be cargo-culted from US apps.
 - **`liff.getProfile()` personalization** ("Luis says you owe ¥1,500"). Requires a permission prompt with no v1 benefit. v1.5 candidate.
+- **Manual dark mode toggle.** LINE's iOS webview doesn't reliably propagate `prefers-color-scheme` to embedded LIFF apps — a known platform constraint, not a bug in the CSS. Rather than ship a half-working dark mode, the app is light-only in v1. A manual toggle (sun/moon, persisted to localStorage like the language toggle) is the v1.5 candidate if dark mode becomes user-requested.
 
 ## Local development
 
