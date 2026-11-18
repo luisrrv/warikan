@@ -1,5 +1,10 @@
 # warikan 割り勘
 
+> [!IMPORTANT]
+> **This repo is archived. warikan moved to [luisrrv/okanjo](https://github.com/luisrrv/okanjo).**
+> The code lives on there as [`liff/`](https://github.com/luisrrv/okanjo/tree/main/liff), with this repo's full history, and is served at **https://warikan.lrod.dev/liff**.
+> The LINE link and QR code below still work. In okanjo it is becoming the LINE front end of a Rails 8 app with accounts and a JSON API ([ADR 0021](https://github.com/luisrrv/okanjo/blob/main/docs/adr/0021-phase-2-shape.md), [ADR 0024](https://github.com/luisrrv/okanjo/blob/main/docs/adr/0024-line-front-end-and-line-login.md)).
+
 A LIFF mini-app for splitting a bill across people in a LINE chat. Tap a button, pick a chat, the split lands as a clean message everyone in the group can see.
 
 > Built to demonstrate the LIFF SDK surface — `liff.init`, `liff.shareTargetPicker`, FlexMessage payloads — on a small, single-screen utility shaped for actual daily use in Japan.
@@ -9,7 +14,7 @@ A LIFF mini-app for splitting a bill across people in a LINE chat. Tap a button,
 </p>
 
 <p align="center">
-  <a href="https://liff.line.me/2009905533-DGtLYpEl"><b>Open in LINE</b></a>  ·  <a href="https://warikan-jp.netlify.app"><b>Web preview</b></a>
+  <a href="https://liff.line.me/2009905533-DGtLYpEl"><b>Open in LINE</b></a>  ·  <a href="https://warikan.lrod.dev/liff"><b>Web preview</b></a>
 </p>
 
 <p align="center">
